@@ -3,7 +3,7 @@ import {
     Logo,
     BurgerIcon,
     ListIcon,
-    ProfileIcon
+    ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./AppHeader.module.css";
 
@@ -34,7 +34,12 @@ const items = [
 
 function Item(props: ItemProps) {
     return (
-        <a href={props.href} className={`${!!props.className ? props.className : styles.item} pt-4 pb-4 pl-5 pr-5`}>
+        <a
+            href={props.href}
+            className={`${
+                !!props.className ? props.className : styles.item
+            } pt-4 pb-4 pl-5 pr-5`}
+        >
             {props.icon(props.active)}
             <span
                 className={`text text_type_main-default${
@@ -61,7 +66,15 @@ function AppHeader() {
                     ))}
                 </nav>
                 <Logo />
-                <Item text="Личный кабинет" className={styles.profile} href="/profile" active={false} icon={(active) => <ProfileIcon type={active ? "primary" : "disabled"} />} />
+                <Item
+                    text="Личный кабинет"
+                    className={styles.profile}
+                    href="/profile"
+                    active={false}
+                    icon={(active) => (
+                        <ProfileIcon type={active ? "primary" : "disabled"} />
+                    )}
+                />
             </div>
         </header>
     );

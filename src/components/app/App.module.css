@@ -1,0 +1,10 @@
+.section {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    height: calc(100vh - 88px);
+    max-width: 1240px;
+}
