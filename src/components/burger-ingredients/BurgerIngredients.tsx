@@ -4,11 +4,11 @@ import {
     CurrencyIcon,
     Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { ItemProps } from "../../types";
+import { ItemTypes } from "../../types";
 import styles from "./BurgerIngredients.module.css";
 
 type Props = {
-    items: ItemProps[];
+    items: ItemTypes[];
 };
 
 const tabs = {
@@ -19,7 +19,7 @@ const tabs = {
 
 type TabsKeys = keyof typeof tabs;
 
-function Item({ name, price, image, __v: count }: ItemProps) {
+function Item({ name, price, image, __v: count }: ItemTypes) {
     return (
         <li className={`${styles.item} pl-4 pr-4`}>
             <img src={image} alt={name} />
