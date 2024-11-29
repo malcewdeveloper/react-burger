@@ -6,6 +6,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ItemTypes } from "../../types";
 import styles from "./BurgerIngredients.module.css";
+import Modal from "../modal/Modal";
+import IngredientDetails from "../ingredient-details/IngredientDetails";
 
 type Props = {
     items: ItemTypes[];
@@ -19,19 +21,36 @@ const tabs = {
 
 type TabsKeys = keyof typeof tabs;
 
-function Item({ name, price, image, __v: count }: ItemTypes) {
+function Item(props: ItemTypes) {
+    const { name, price, image, __v: count } = props;
+
+    const [openModal, setOpenModal] = React.useState(false);
+
+    const handleOpenModal = () => setOpenModal(true);
+    const handleCloseModal = () => setOpenModal(false);
+
     return (
-        <li className={`${styles.item} pl-4 pr-4`}>
-            <img src={image} alt={name} />
-            <div className={`${styles.currency} pt-2 pb-2`}>
-                <span className={`text text_type_main-default ${styles.price}`}>
-                    {price}
-                </span>
-                <CurrencyIcon type="primary" />
-            </div>
-            <p className="text text_type_main-default">{name}</p>
-            {!!count && <Counter count={count} />}
-        </li>
+        <>
+            <li
+                onClick={handleOpenModal}
+                className={`${styles.item} pl-4 pr-4`}
+            >
+                <img src={image} alt={name} />
+                <div className={`${styles.currency} pt-2 pb-2`}>
+                    <span
+                        className={`text text_type_main-default ${styles.price}`}
+                    >
+                        {price}
+                    </span>
+                    <CurrencyIcon type="primary" />
+                </div>
+                <p className="text text_type_main-default">{name}</p>
+                {!!count && <Counter count={count} />}
+            </li>
+            <Modal isOpen={openModal} onClose={handleCloseModal}>
+                <IngredientDetails {...props} />
+            </Modal>
+        </>
     );
 }
 
