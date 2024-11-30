@@ -1,0 +1,47 @@
+.aside {
+    flex: 1;
+    height: 100%;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    list-style: none;
+    height: calc(100% - (156px + 80px * 2));
+    overflow-y: auto;
+}
+
+.item {
+    position: relative;
+    list-style: none;
+}
+
+.grab {
+    position: absolute;
+    top: calc(50% - (24px / 2));
+    left: 0;
+    background-color: transparent;
+    border: none;
+    cursor: grab;
+    width: 24px;
+    height: 24px;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 40px;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.icon {
+    width: 36px;
+    height: 36px;
+}
