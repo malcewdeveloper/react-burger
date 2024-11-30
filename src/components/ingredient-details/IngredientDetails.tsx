@@ -24,7 +24,7 @@ function IngredientDetails({ image, name, ...props }: Props) {
                 <h3 className="text text_type_main-medium pb-8">{name}</h3>
                 <ul className={styles.list}>
                     {Object.keys(labels).map((label) => (
-                        <li className={styles.item}>
+                        <li key={label} className={styles.item}>
                             <span className="text text_type_main-default text_color_inactive">
                                 {labels[label as keyof typeof labels]}
                             </span>

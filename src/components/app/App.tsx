@@ -17,7 +17,11 @@ function App() {
         setState((prevState) => ({ ...prevState, isLoading: true }));
 
         fetch(`${API_URL}/ingredients`)
-            .then((response) => response.json())
+            .then((response) => {
+                if (!response.ok) throw Error("Ошибка ответа от сервера");
+
+                return response.json();
+            })
             .then((data) =>
                 setState((prevState) => ({ ...prevState, data: data.data })),
             )

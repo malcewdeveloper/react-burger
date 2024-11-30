@@ -57,8 +57,6 @@ function Item(props: ItemTypes) {
 function BurgerIngredients({ items }: Props) {
     const [active, setActive] = React.useState<TabsKeys>("bun");
 
-    const filteredItems = items.filter((item) => item.type === active);
-
     return (
         <main className={styles.main}>
             <h1 className="text text_type_main-large pb-5 pt-10">
@@ -66,25 +64,35 @@ function BurgerIngredients({ items }: Props) {
             </h1>
             <div className={styles.tabs}>
                 {Object.entries(tabs).map(([key, value]) => (
-                    <Tab
-                        key={key}
-                        active={active === key}
-                        value={key}
-                        onClick={() => setActive(key as TabsKeys)}
-                    >
-                        {value}
-                    </Tab>
+                    <a key={key} href={`#${key}`} className={styles.link}>
+                        <Tab
+                            active={active === key}
+                            value={key}
+                            onClick={() => setActive(key as TabsKeys)}
+                        >
+                            {value}
+                        </Tab>
+                    </a>
                 ))}
             </div>
-            <section className={`${styles.wrapper} pt-10`}>
-                <h2 className="text text_type_main-medium pb-6">
-                    {tabs[active]}
-                </h2>
-                <ul className={`${styles.content} pl-4 pr-4`}>
-                    {filteredItems.map((item) => (
-                        <Item key={item._id} {...item} />
-                    ))}
-                </ul>
+            <section className={`${styles.wrapper}`}>
+                {Object.keys(tabs).map((key) => (
+                    <React.Fragment key={key}>
+                        <h2
+                            className="text text_type_main-medium pt-10 pb-6"
+                            id={key}
+                        >
+                            {tabs[key as TabsKeys]}
+                        </h2>
+                        <ul className={`${styles.content} pl-4 pr-4`}>
+                            {items
+                                .filter((item) => item.type === key)
+                                .map((item) => (
+                                    <Item key={item._id} {...item} />
+                                ))}
+                        </ul>
+                    </React.Fragment>
+                ))}
             </section>
         </main>
     );
