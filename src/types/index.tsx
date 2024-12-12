@@ -12,3 +12,9 @@ export type ItemTypes = {
     image_large: string;
     __v: number;
 };
+
+export type ApiStateTypes<T = unknown> = {
+    isLoading: boolean;
+    hasError: boolean;
+    data: T;
+};

@@ -1,3 +1,4 @@
+import React from "react";
 import {
     ConstructorElement,
     Button,
@@ -6,6 +7,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ItemTypes } from "../../types";
 import styles from "./BurgerConstructor.module.css";
+import Modal from "../modal/Modal";
+import OrderDetails from "../order-details/OrderDetails";
 
 type Props = {
     items: ItemTypes[];
@@ -35,9 +38,14 @@ function Item(props: ItemProps) {
 }
 
 function BurgerConstructor({ items }: Props) {
+    const [openModal, setOpenModal] = React.useState(false);
+
     const filteredItems = items.filter((item) => item.type !== "bun");
     const bunItem = items.find((item) => item.type === "bun");
     const count = items.reduce((prev, current) => prev + current.price, 0);
+
+    const handleOpenModal = () => setOpenModal(true);
+    const handleCloseModal = () => setOpenModal(false);
 
     return (
         <aside className={`${styles.aside} pl-4 pr-4 pt-25`}>
@@ -75,9 +83,16 @@ function BurgerConstructor({ items }: Props) {
                     <p className="text text_type_digits-medium">{count}</p>
                     <CurrencyIcon type="primary" className={styles.icon} />
                 </div>
-                <Button htmlType="button" size="large">
+                <Button
+                    onClick={handleOpenModal}
+                    htmlType="button"
+                    size="large"
+                >
                     Оформить заказ
                 </Button>
+                <Modal isOpen={openModal} onClose={handleCloseModal}>
+                    <OrderDetails />
+                </Modal>
             </div>
         </aside>
     );
