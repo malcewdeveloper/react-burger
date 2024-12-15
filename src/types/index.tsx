@@ -1,4 +1,4 @@
-export type ItemTypes = {
+export type ItemType = {
     _id: string;
     name: string;
     type: string;
@@ -13,8 +13,13 @@ export type ItemTypes = {
     __v: number;
 };
 
-export type ApiStateTypes<T = unknown> = {
+export type ApiStateType<T = unknown> = {
     isLoading: boolean;
     hasError: boolean;
     data: T;
+};
+
+export type ApiResponseDataType<T = unknown> = {
+    data: T;
+    success: string;
 };

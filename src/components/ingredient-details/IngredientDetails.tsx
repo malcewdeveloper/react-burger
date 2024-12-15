@@ -1,8 +1,8 @@
 import React from "react";
-import { ItemTypes } from "../../types";
+import { ItemType } from "../../types";
 import styles from "./IngredientDetails.module.css";
 
-type Props = ItemTypes;
+type Props = ItemType;
 
 const labels = {
     calories: "Калории,ккал",
