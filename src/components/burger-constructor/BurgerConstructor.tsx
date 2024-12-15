@@ -5,14 +5,10 @@ import {
     DragIcon,
     CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { ItemTypes } from "../../types";
-import styles from "./BurgerConstructor.module.css";
+import { useAppSelector } from "../../services/store";
 import Modal from "../modal/Modal";
 import OrderDetails from "../order-details/OrderDetails";
-
-type Props = {
-    items: ItemTypes[];
-};
+import styles from "./BurgerConstructor.module.css";
 
 type ItemProps = {
     thumbnail: string;
@@ -37,12 +33,13 @@ function Item(props: ItemProps) {
     );
 }
 
-function BurgerConstructor({ items }: Props) {
+function BurgerConstructor() {
     const [openModal, setOpenModal] = React.useState(false);
+    const { data } = useAppSelector((state) => state.cart);
 
-    const filteredItems = items.filter((item) => item.type !== "bun");
-    const bunItem = items.find((item) => item.type === "bun");
-    const count = items.reduce((prev, current) => prev + current.price, 0);
+    const filteredItems = data.filter((item) => item.type !== "bun");
+    const bunItem = data.find((item) => item.type === "bun");
+    const count = data.reduce((prev, current) => prev + current.price, 0);
 
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
