@@ -17,7 +17,32 @@ const initialState: IngredientState = {
 const ingredientSlice = createSlice({
     name: "ingredients",
     initialState,
-    reducers: {},
+    reducers: {
+        incrementCount: (state, action: PayloadAction<string>) => {
+            state.data = state.data.map((item) =>
+                item._id === action.payload
+                    ? { ...item, __v: item.__v + 1 }
+                    : item,
+            );
+        },
+        decrementCount: (state, action: PayloadAction<string>) => {
+            state.data = state.data.map((item) =>
+                item._id === action.payload
+                    ? { ...item, __v: item.__v - 1 }
+                    : item,
+            );
+        },
+        incrementBun: (state, action: PayloadAction<string>) => {
+            state.data = state.data.map((item) =>
+                item._id === action.payload
+                    ? { ...item, __v: 2 }
+                    : { ...item, __v: item.type === "bun" ? 0 : item.__v },
+            );
+        },
+        decrementAll: (state) => {
+            state.data = state.data.map((item) => ({ ...item, __v: 0 }));
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getIngredients.pending, (state) => {
@@ -42,4 +67,6 @@ const ingredientSlice = createSlice({
     },
 });
 
+export const { incrementCount, decrementCount, incrementBun, decrementAll } =
+    ingredientSlice.actions;
 export default ingredientSlice.reducer;

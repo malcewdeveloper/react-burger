@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { postOrder } from "../thunks/orderThunks";
 
 type OrderState = {
@@ -18,10 +18,22 @@ const orderSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(postOrder.pending, (state) => {
-            state.isLoading = true;
-            state.isError = false;
-        });
+        builder
+            .addCase(postOrder.pending, (state) => {
+                state.isLoading = true;
+                state.isError = false;
+            })
+            .addCase(postOrder.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isError = false;
+                state.number = action.payload.order.number;
+            })
+            .addCase(postOrder.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+
+                console.error(action.payload);
+            });
     },
 });
 
