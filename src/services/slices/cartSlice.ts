@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ItemType } from "../../types";
+import { ItemTypeWithId } from "../../types";
 
 type CartState = {
-    data: ItemType[];
+    data: ItemTypeWithId[];
 };
 
 const initialState: CartState = {
@@ -13,16 +13,46 @@ const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
-        addItem: (state, action: PayloadAction<ItemType[]>) => {
-            state.data = action.payload;
+        addItem: (state, action: PayloadAction<ItemTypeWithId>) => {
+            if (action.payload.type === "bun") {
+                state.data = state.data.filter((item) => item.type !== "bun");
+            }
+
+            state.data.push(action.payload);
         },
         removeItem: (state, action: PayloadAction<string>) => {
             state.data = state.data.filter(
-                (item) => item._id !== action.payload,
+                (item) => item.id !== action.payload,
             );
+        },
+        moveItem: (
+            state,
+            action: PayloadAction<{ fromId: string; toId: string }>,
+        ) => {
+            const { fromId, toId } = action.payload;
+
+            const fromIndex = state.data.findIndex(
+                (item) => item.id === fromId,
+            );
+
+            const toIndex = state.data.findIndex((item) => item.id === toId);
+
+            if (fromIndex !== -1 && toIndex !== -1) {
+                const items = [...state.data];
+
+                [items[fromIndex], items[toIndex]] = [
+                    items[toIndex],
+                    items[fromIndex],
+                ];
+
+                state.data = items;
+            }
+        },
+        clearCart: (state) => {
+            state.data = [];
         },
     },
 });
 
-export const { addItem, removeItem } = cartSlice.actions;
+export const { addItem, removeItem, moveItem, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -13,6 +13,8 @@ export type ItemType = {
     __v: number;
 };
 
+export type ItemTypeWithId = { id: "string" } & ItemType;
+
 export type ApiStateType<T = unknown> = {
     isLoading: boolean;
     hasError: boolean;
