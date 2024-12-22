@@ -11,26 +11,27 @@ type Props = {
 };
 
 function Modal({ children, isOpen, onClose }: Props) {
-    React.useEffect(() => {
-        isOpen
-            ? (document.body.style.overflow = "hidden")
-            : (document.body.style.overflow = "");
-
-        document.addEventListener("keydown", (event) => handleKeyDown(event));
-
-        return () => {
-            document.body.style.overflow = "";
-            document.removeEventListener("keydown", (event) =>
-                handleKeyDown(event),
-            );
-        };
-    }, [isOpen]);
-
     function handleKeyDown(event: KeyboardEvent) {
         if (event.key === "Escape") onClose();
     }
 
-    if(!isOpen) return null;
+    React.useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = "hidden";
+            document.addEventListener("keydown", (event) =>
+                handleKeyDown(event),
+            );
+
+            return () => {
+                document.body.style.overflow = "";
+                document.removeEventListener("keydown", (event) =>
+                    handleKeyDown(event),
+                );
+            };
+        }
+    }, [isOpen]);
+
+    if (!isOpen) return null;
 
     return ReactDOM.createPortal(
         <ModalOverlay onClose={onClose}>
