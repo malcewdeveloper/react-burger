@@ -28,11 +28,9 @@ const orderSlice = createSlice({
                 state.isError = false;
                 state.number = action.payload.order.number;
             })
-            .addCase(postOrder.rejected, (state, action) => {
+            .addCase(postOrder.rejected, (state) => {
                 state.isLoading = false;
                 state.isError = true;
-
-                console.error(action.payload);
             });
     },
 });

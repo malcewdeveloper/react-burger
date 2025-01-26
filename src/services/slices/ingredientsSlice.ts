@@ -10,7 +10,7 @@ type IngredientState = {
 
 const initialState: IngredientState = {
     data: [],
-    isLoading: false,
+    isLoading: true,
     isError: false,
 };
 
@@ -46,7 +46,6 @@ const ingredientSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getIngredients.pending, (state) => {
-                state.isLoading = true;
                 state.isError = false;
             })
             .addCase(

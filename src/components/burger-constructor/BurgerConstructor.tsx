@@ -7,6 +7,7 @@ import Modal from "../modal/Modal";
 import OrderDetails from "../order-details/OrderDetails";
 import { BurgerConstructorItem as Item } from "./components/BurgerConstructorItem";
 import { useAppSelector, useAppDispatch } from "../../services/store";
+import { useNavigate } from "react-router";
 import {
     addItem,
     removeItem,
@@ -22,12 +23,15 @@ import { postOrder } from "../../services/thunks/orderThunks";
 import { useDrop } from "react-dnd";
 import { ItemType, ItemTypeWithId } from "../../types";
 import { v4 as uuidv4 } from "uuid";
+import { getCookie } from "../../utils";
 import styles from "./BurgerConstructor.module.css";
 
 function BurgerConstructor() {
     const [openModal, setOpenModal] = React.useState(false);
     const { data } = useAppSelector((state) => state.cart);
     const dispatch = useAppDispatch();
+
+    const navigate = useNavigate();
 
     const [, drop] = useDrop<ItemType>({
         accept: "item",
@@ -71,6 +75,10 @@ function BurgerConstructor() {
         if (postOrder.fulfilled.match(result)) {
             dispatch(clearCart());
             dispatch(decrementAll());
+        }
+
+        if (postOrder.rejected.match(result) && !getCookie("token")) {
+            navigate("/login");
         }
     };
 

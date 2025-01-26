@@ -4,3 +4,5 @@ export { default as ForgotPassword } from "./forgot-password/ForgotPassword";
 export { default as ResetPassword } from "./reset-password/ResetPassword";
 export { default as Profile } from "./profile/Profile";
 export { default as Ingredient } from "./ingredient/Ingredient";
+export { default as NotFound } from "./not-found/NotFound";
+export { default as Main } from "./main/Main";

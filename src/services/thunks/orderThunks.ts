@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_URL } from "../../constants";
-import { checkResponse } from "../../utils";
+import { checkResponse, getCookie } from "../../utils";
 
 type RequestData = {
     ingredients: string[];
@@ -16,11 +16,12 @@ type ResponseData = {
 
 export const postOrder = createAsyncThunk<ResponseData, RequestData>(
     "order/post",
-    async (data: RequestData) => {
+    async (data) => {
         return await fetch(`${API_URL}/orders`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json;charset=utf-8",
+                Authorization: `Bearer ${getCookie("token")}`,
             },
             body: JSON.stringify(data),
         }).then(checkResponse);
