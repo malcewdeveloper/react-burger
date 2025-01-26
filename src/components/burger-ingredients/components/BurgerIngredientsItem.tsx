@@ -8,29 +8,46 @@ import {
     Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
+import { useNavigate, useLocation, useParams } from "react-router";
 import { ItemType } from "../../../types";
 import styles from "../BurgerIngredients.module.css";
 
 export function BurgerIngredientsItem(props: ItemType) {
-    const { name, price, image, __v: count } = props;
+    const { name, price, image, __v: count, _id: propId } = props;
+
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const { id } = useParams();
+    const isModal = location.state?.modal;
 
     const [openModal, setOpenModal] = React.useState(false);
 
-    const dispatch = useAppDispatch();
     const [, drag] = useDrag({
         type: "item",
         item: props,
     });
 
     const handleOpenModal = () => {
+        navigate(`/ingredients/${props._id}`, { state: { modal: true } });
+
         setOpenModal(true);
         dispatch(addProduct(props));
     };
 
     const handleCloseModal = () => {
+        navigate("/");
+
         setOpenModal(false);
         dispatch(removeProduct());
     };
+
+    React.useEffect(() => {
+        if (isModal && id === propId) {
+            setOpenModal(true);
+        }
+    }, [isModal, id, propId]);
 
     return (
         <>

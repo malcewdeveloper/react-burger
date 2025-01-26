@@ -1,3 +1,11 @@
+export type UserType = {
+    email: string;
+    password: string;
+    name: string;
+};
+
+export type UserTypeWithoutPassword = Omit<UserType, "password">;
+
 export type ItemType = {
     _id: string;
     name: string;
@@ -24,4 +32,12 @@ export type ApiStateType<T = unknown> = {
 export type ApiResponseDataType<T = unknown> = {
     data: T;
     success: string;
+};
+
+export type CookieProps = {
+    expires?: number | Date | string;
+    path?: string;
+    domain?: string;
+    secure?: boolean;
+    SameSite?: "Strict" | "Lax" | "None";
 };

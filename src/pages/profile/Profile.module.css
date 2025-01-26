@@ -1,0 +1,7 @@
+.form {
+    margin-left: 60px;
+}
+
+.button {
+    width: calc(50% - 8px);
+}

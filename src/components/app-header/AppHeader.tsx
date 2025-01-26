@@ -5,6 +5,7 @@ import {
     ListIcon,
     ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link, useLocation } from "react-router";
 import styles from "./AppHeader.module.css";
 
 type ItemProps = {
@@ -34,8 +35,8 @@ const items = [
 
 function Item(props: ItemProps) {
     return (
-        <a
-            href={props.href}
+        <Link
+            to={props.href}
             className={`${
                 !!props.className ? props.className : styles.item
             } pt-4 pb-4 pl-5 pr-5`}
@@ -48,11 +49,13 @@ function Item(props: ItemProps) {
             >
                 {props.text}
             </span>
-        </a>
+        </Link>
     );
 }
 
 function AppHeader() {
+    const location = useLocation();
+
     return (
         <header className={`${styles.header} pt-4 pb-4`}>
             <div className={`${styles.container}`}>
@@ -60,7 +63,14 @@ function AppHeader() {
                     {items.map((item) => (
                         <Item
                             key={item.text}
-                            active={item.href === window.location.pathname}
+                            active={
+                                item.href === "/"
+                                    ? location.pathname === "/" ||
+                                      location.pathname.startsWith(
+                                          "/ingredients",
+                                      )
+                                    : location.pathname === item.href
+                            }
                             {...item}
                         />
                     ))}
@@ -70,7 +80,7 @@ function AppHeader() {
                     text="Личный кабинет"
                     className={styles.profile}
                     href="/profile"
-                    active={false}
+                    active={location.pathname.startsWith("/profile")}
                     icon={(active) => (
                         <ProfileIcon type={active ? "primary" : "disabled"} />
                     )}
