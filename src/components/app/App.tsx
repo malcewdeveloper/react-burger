@@ -19,36 +19,50 @@ import {
     NotFound,
 } from "../../pages";
 import ProtectedRoute from "../protected-route/ProtectedRoute";
+import IngredientDetails from "../ingredient-details/IngredientDetails";
+import { useAppSelector } from "../../services/store";
 
 function App() {
     const location = useLocation();
-    const isModal = location.state?.modal;
+    const background = location.state?.background;
 
     return (
-        <Routes>
-            <Route element={<BaseLayout />}>
-                <Route path="/" index element={<Main />} />
-                <Route element={<AuthLayout />}>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
+        <React.Fragment>
+            <Routes location={background || location}>
+                <Route element={<BaseLayout />}>
+                    <Route path="/" index element={<Main />} />
+                    <Route element={<AuthLayout />}>
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route
+                            path="/forgot-password"
+                            element={<ForgotPassword />}
+                        />
+                        <Route
+                            path="/reset-password"
+                            element={<ResetPassword />}
+                        />
+                    </Route>
                     <Route
-                        path="/forgot-password"
-                        element={<ForgotPassword />}
-                    />
-                    <Route path="/reset-password" element={<ResetPassword />} />
+                        element={<ProtectedRoute element={<ProfileLayout />} />}
+                    >
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/profile/orders" />
+                        <Route path="/prodile/orders/:id" />
+                    </Route>
+                    <Route path="/ingredients/:id" element={<Ingredient />} />
                 </Route>
-                <Route element={<ProtectedRoute element={<ProfileLayout />} />}>
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/profile/orders" />
-                    <Route path="/prodile/orders/:id" />
-                </Route>
-                <Route
-                    path="/ingredients/:id"
-                    element={isModal ? <Main /> : <Ingredient />}
-                />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-        </Routes>
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+            {background && (
+                <Routes>
+                    <Route
+                        path="/ingredients/:id"
+                        element={<IngredientDetails isOpen={!!background} />}
+                    ></Route>
+                </Routes>
+            )}
+        </React.Fragment>
     );
 }
 
