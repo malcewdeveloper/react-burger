@@ -8,20 +8,31 @@ import {
     getUser,
     updateUser,
 } from "../thunks/authThunks";
-import { UserTypeWithoutPassword } from "../../types";
+import { OrderMessageType, UserTypeWithoutPassword } from "../../types";
 import { ResponseAuthData } from "../../api/auth/types";
 import { ResponseUser } from "../../api/user/types";
 
 type State = {
+    data: OrderMessageType | null;
     user: UserTypeWithoutPassword | null;
     isLoading: boolean;
+    status:
+        | "connecting"
+        | "disconnecting"
+        | "connected"
+        | "disconnected"
+        | "error";
+    error: Event | null;
     isError: boolean;
     errorMessage: string;
 };
 
 const initialState: State = {
+    data: null,
     user: null,
     isLoading: true,
+    status: "disconnected",
+    error: null,
     isError: false,
     errorMessage: "",
 };
@@ -29,7 +40,32 @@ const initialState: State = {
 const authSlice = createSlice({
     name: "auth",
     initialState,
-    reducers: {},
+    reducers: {
+        connect: (state, _action: PayloadAction<string>) => {
+            state.status = "connecting";
+            state.data = null;
+        },
+        disconnect: (state) => {
+            state.status = "disconnecting";
+            state.data = null;
+        },
+        sendMessage: (_state, _action: PayloadAction<OrderMessageType>) => {},
+        onConnected: (state, _action: PayloadAction<Event>) => {
+            state.status = "connected";
+            state.data = null;
+        },
+        onDisconnected: (state, _action: PayloadAction<CloseEvent>) => {
+            state.status = "disconnected";
+            state.data = null;
+        },
+        onMessageReceived: (state, action: PayloadAction<OrderMessageType>) => {
+            state.data = action.payload;
+        },
+        onError: (state, action: PayloadAction<Event>) => {
+            state.status = "error";
+            state.error = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(register.pending, (state) => {
@@ -156,5 +192,15 @@ const authSlice = createSlice({
             );
     },
 });
+
+export const {
+    connect,
+    disconnect,
+    sendMessage,
+    onConnected,
+    onDisconnected,
+    onMessageReceived,
+    onError,
+} = authSlice.actions;
 
 export default authSlice.reducer;

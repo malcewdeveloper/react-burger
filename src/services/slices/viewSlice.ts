@@ -1,12 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ItemType } from "../../types";
+import { ItemType, OrderType } from "../../types";
 
 type ViewState = {
     selectProduct: ItemType | null;
+    selectOrder: OrderType | null;
 };
 
 const initialState: ViewState = {
     selectProduct: null,
+    selectOrder: null,
 };
 
 const viewSlice = createSlice({
@@ -19,8 +21,15 @@ const viewSlice = createSlice({
         removeProduct: (state) => {
             state.selectProduct = null;
         },
+        addOrder: (state, action: PayloadAction<OrderType>) => {
+            state.selectOrder = action.payload;
+        },
+        removeOrder: (state) => {
+            state.selectOrder = null;
+        },
     },
 });
 
-export const { addProduct, removeProduct } = viewSlice.actions;
+export const { addProduct, removeProduct, addOrder, removeOrder } =
+    viewSlice.actions;
 export default viewSlice.reducer;
