@@ -1,8 +1,7 @@
 import React from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { BurgerIngredientsItem as Item } from "./components/BurgerIngredientsItem";
-import { useAppDispatch, useAppSelector } from "../../services/store";
-import { getIngredients } from "../../services/thunks/ingredientsThunks";
+import { useAppSelector } from "../../services/store";
 import styles from "./BurgerIngredients.module.css";
 
 const tabs = {
@@ -18,12 +17,6 @@ function BurgerIngredients() {
     const { data, isLoading, isError } = useAppSelector(
         (state) => state.ingredients,
     );
-
-    const dispatch = useAppDispatch();
-
-    React.useEffect(() => {
-        dispatch(getIngredients());
-    }, [dispatch]);
 
     const handleScroll = (event: React.UIEvent<HTMLElement>) => {
         const containerTop = event.currentTarget.getBoundingClientRect().top;

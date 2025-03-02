@@ -26,7 +26,7 @@ const items = [
     },
     {
         text: "Лента заказов",
-        href: "/orders",
+        href: "/feed",
         icon: (active: boolean) => (
             <ListIcon type={active ? "primary" : "disabled"} />
         ),
@@ -69,7 +69,7 @@ function AppHeader() {
                                       location.pathname.startsWith(
                                           "/ingredients",
                                       )
-                                    : location.pathname === item.href
+                                    : location.pathname.startsWith(item.href)
                             }
                             {...item}
                         />

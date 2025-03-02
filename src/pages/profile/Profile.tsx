@@ -4,9 +4,7 @@ import Input from "../../components/input/Input";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./Profile.module.css";
 import { useAppDispatch, useAppSelector } from "../../services/store";
-import { getFormData } from "../../utils";
 import { updateUser } from "../../services/thunks/authThunks";
-import { RequestUserUpdate } from "../../api/user/types";
 
 export default function Profile() {
     const [editState, setEdit] = React.useState({
@@ -76,7 +74,7 @@ export default function Profile() {
     };
 
     return (
-        <Form onSubmit={handleSubmit} extraClass={styles.form}>
+        <Form onSubmit={handleSubmit} extraClass={`${styles.form} pt-30`}>
             <Input
                 ref={inputsRefs.name}
                 name="name"
