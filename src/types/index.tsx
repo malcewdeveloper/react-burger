@@ -21,6 +21,16 @@ export type ItemType = {
     __v: number;
 };
 
+export type OrderType = {
+    name: string;
+    ingredients: string[];
+    _id: string;
+    status: "done" | "created" | "pending";
+    number: number;
+    createdAt: string;
+    updatedAt: string;
+};
+
 export type ItemTypeWithId = { id: "string" } & ItemType;
 
 export type ApiStateType<T = unknown> = {
@@ -32,6 +42,13 @@ export type ApiStateType<T = unknown> = {
 export type ApiResponseDataType<T = unknown> = {
     data: T;
     success: string;
+};
+
+export type OrderMessageType = {
+    orders: OrderType[];
+    success: boolean;
+    total: number;
+    totalToday: number;
 };
 
 export type CookieProps = {

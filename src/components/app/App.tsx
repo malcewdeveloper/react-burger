@@ -8,6 +8,7 @@ import {
 import BaseLayout from "../../layouts/base-layout/BaseLayout";
 import AuthLayout from "../../layouts/auth-layout/AuthLayout";
 import ProfileLayout from "../../layouts/profile-layout/ProfileLayout";
+import MainLayout from "../../layouts/main-layout/MainLayout";
 import {
     Main,
     Login,
@@ -17,10 +18,13 @@ import {
     Profile,
     Ingredient,
     NotFound,
+    Feed,
+    Orders,
+    OrderInfo,
 } from "../../pages";
 import ProtectedRoute from "../protected-route/ProtectedRoute";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
-import { useAppSelector } from "../../services/store";
+import OrderModal from "../order-modal/OrderModal";
 
 function App() {
     const location = useLocation();
@@ -30,7 +34,11 @@ function App() {
         <React.Fragment>
             <Routes location={background || location}>
                 <Route element={<BaseLayout />}>
-                    <Route path="/" index element={<Main />} />
+                    <Route element={<MainLayout />}>
+                        <Route path="/" index element={<Main />} />
+                        <Route path="/feed" element={<Feed />} />
+                        <Route path="/feed/:id" element={<OrderInfo />} />
+                    </Route>
                     <Route element={<AuthLayout />}>
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
@@ -47,8 +55,19 @@ function App() {
                         element={<ProtectedRoute element={<ProfileLayout />} />}
                     >
                         <Route path="/profile" element={<Profile />} />
-                        <Route path="/profile/orders" />
-                        <Route path="/prodile/orders/:id" />
+                        <Route path="/profile/orders" element={<Orders />} />
+                    </Route>
+                    <Route
+                        element={
+                            <ProtectedRoute
+                                element={<ProfileLayout hasMenu={false} />}
+                            />
+                        }
+                    >
+                        <Route
+                            path="/profile/orders/:id"
+                            element={<OrderInfo />}
+                        />
                     </Route>
                     <Route path="/ingredients/:id" element={<Ingredient />} />
                 </Route>
@@ -59,7 +78,15 @@ function App() {
                     <Route
                         path="/ingredients/:id"
                         element={<IngredientDetails isOpen={!!background} />}
-                    ></Route>
+                    />
+                    <Route
+                        path="/feed/:id"
+                        element={<OrderModal isOpen={!!background} />}
+                    />
+                    <Route
+                        path="/profile/orders/:id"
+                        element={<OrderModal isOpen={!!background} />}
+                    />
                 </Routes>
             )}
         </React.Fragment>
