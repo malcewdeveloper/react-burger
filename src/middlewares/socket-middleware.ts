@@ -6,9 +6,9 @@ import {
     type MiddlewareAPI,
     type UnknownAction,
 } from "@reduxjs/toolkit";
-
 import { RootState } from "../services/store";
 import authApi from "../api/auth";
+import { getCookie } from "../utils";
 
 type WebSocketActions<TMessage> = {
     connect: ActionCreatorWithPayload<string>;
@@ -38,7 +38,7 @@ export function createWebSocketMiddleware<TMessage>(
 ): Middleware<unknown, RootState, Dispatch<UnknownAction>> {
     let socket: WebSocket | null = null;
     let isConnected = false;
-    let reconnectTimer: number | null = null;
+    let reconnectTimer = 0;
     let url: string;
 
     return ((store: MiddlewareAPI<Dispatch<UnknownAction>, RootState>) =>
@@ -52,61 +52,52 @@ export function createWebSocketMiddleware<TMessage>(
 
                 url = action.payload;
                 socket = new WebSocket(url);
-                isConnected = false;
+                isConnected = true;
 
                 socket.onopen = (event) => {
                     store.dispatch(onConnected(event));
-                    isConnected = true;
-
-                    if (reconnectTimer) {
-                        clearTimeout(reconnectTimer);
-                        reconnectTimer = null;
-                    }
                 };
 
                 socket.onclose = (event) => {
                     store.dispatch(onDisconnected(event));
                     socket = null;
-                    isConnected = false;
-
-                    if (!isConnected) {
-                        reconnectTimer = window.setTimeout(() => {
-                            store.dispatch(connect(url));
-                        }, 3000);
-                    }
                 };
 
                 socket.onmessage = (event) => {
                     const data = JSON.parse(event.data);
                     store.dispatch(onMessageReceived(data));
 
-                    if (withTokenRefresh) {
-                        authApi.getToken().then((refreshData) => {
-                            const wssUrl = new URL(url);
-                            wssUrl.searchParams.set(
-                                "token",
-                                refreshData.accessToken.replace("Bearer ", ""),
-                            );
+                    if (
+                        withTokenRefresh &&
+                        data.message === "Invalid or missing token"
+                    ) {
+                        const token = getCookie("token");
+                        const wssUrl = new URL(url);
 
-                            if (socket !== null) {
-                                socket.close();
-                            }
+                        const updateSocketConnection = (newToken: string) => {
+                            wssUrl.searchParams.set("token", newToken);
+
+                            store.dispatch(disconnect());
 
                             store.dispatch(connect(wssUrl.toString()));
-                        });
+                        };
 
-                        store.dispatch(disconnect());
+                        if (token) {
+                            updateSocketConnection(token);
+                        } else {
+                            authApi.getToken().then((data) => {
+                                const newToken = data.accessToken.replace(
+                                    "Bearer ",
+                                    "",
+                                );
+                                updateSocketConnection(newToken);
+                            });
+                        }
                     }
                 };
 
                 socket.onerror = (event) => {
                     store.dispatch(onError(event));
-
-                    if (!isConnected) {
-                        reconnectTimer = window.setTimeout(() => {
-                            store.dispatch(connect(url));
-                        }, 5000);
-                    }
                 };
             }
 
@@ -115,13 +106,9 @@ export function createWebSocketMiddleware<TMessage>(
                     socket.close();
                 }
 
-                if (reconnectTimer !== null) {
-                    clearTimeout(reconnectTimer);
-                    reconnectTimer = null;
-                }
-
+                clearTimeout(reconnectTimer);
                 isConnected = false;
-                reconnectTimer = null;
+                reconnectTimer = 0;
                 socket = null;
             }
 
