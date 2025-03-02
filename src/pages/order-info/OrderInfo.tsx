@@ -59,10 +59,7 @@ export default function OrderInfo(props: Props) {
             );
 
             if (ingredient) {
-                total +=
-                    ingredient.type === "bun"
-                        ? ingredient.price * 2 * ingredientCount[id]
-                        : ingredient.price * ingredientCount[id];
+                total += ingredient.price * ingredientCount[id];
             }
 
             return total;

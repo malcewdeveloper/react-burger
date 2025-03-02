@@ -32,9 +32,7 @@ export function OrderInfoItem({ id, count }: Props) {
             </p>
             <div className={styles.total}>
                 <span className="text text_type_digits-default mr-2">
-                    {`${
-                        currentIngredient.type === "bun" ? count * 2 : count
-                    } x ${currentIngredient.price}`}
+                    {`${count} x ${currentIngredient.price}`}
                 </span>
                 <CurrencyIcon type="primary" />
             </div>

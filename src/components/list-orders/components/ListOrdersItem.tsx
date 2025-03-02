@@ -89,10 +89,7 @@ export function ListOrdersItem(props: Props) {
         );
 
     const total = ingredients.reduce(
-        (accumulator, ingredient) =>
-            ingredient.type === "bun"
-                ? accumulator + ingredient.price * 2
-                : accumulator + ingredient.price,
+        (accumulator, ingredient) => accumulator + ingredient.price,
         0,
     );
 
