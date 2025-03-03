@@ -50,14 +50,7 @@ function BurgerConstructor() {
     const filteredItems = data.filter((item) => item.type !== "bun");
     const bunItem = data.find((item) => item.type === "bun");
     const count = React.useMemo(
-        () =>
-            data.reduce(
-                (prev, current) =>
-                    current.type === "bun"
-                        ? prev + current.price * 2
-                        : prev + current.price,
-                0,
-            ),
+        () => data.reduce((prev, current) => prev + current.price, 0),
         [data],
     );
 
