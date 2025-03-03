@@ -34,8 +34,8 @@ function App() {
         <React.Fragment>
             <Routes location={background || location}>
                 <Route element={<BaseLayout />}>
+                    <Route path="/" index element={<Main />} />
                     <Route element={<MainLayout />}>
-                        <Route path="/" index element={<Main />} />
                         <Route path="/feed" element={<Feed />} />
                         <Route path="/feed/:id" element={<OrderInfo />} />
                     </Route>
