@@ -1,5 +1,5 @@
 import ListOrders from "../../components/list-orders/ListOrders";
-import { ListOrdersItem } from "../../components/list-orders/components/ListOrdersItem";
+import { ListOrdersItem } from "../../components/list-orders/components/list-orders-item/ListOrdersItem";
 import { useAppSelector } from "../../services/store";
 import { ClipLoader } from "react-spinners";
 
