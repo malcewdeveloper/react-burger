@@ -1,4 +1,4 @@
-import { addProduct } from "../../../services/slices/viewSlice";
+import { addProduct } from "../../../services/slices/view/viewSlice";
 import { useAppDispatch } from "../../../services/store";
 import {
     CurrencyIcon,

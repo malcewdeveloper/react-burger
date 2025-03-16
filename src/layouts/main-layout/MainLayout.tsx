@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
 import { useAppDispatch } from "../../services/store";
-import { connect, disconnect } from "../../services/slices/orderSlice";
+import { connect, disconnect } from "../../services/slices/order/orderSlice";
 import React from "react";
 
 export default function MainLayout() {

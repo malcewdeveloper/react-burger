@@ -4,7 +4,10 @@ import Modal from "../modal/Modal";
 import { ClipLoader } from "react-spinners";
 import { useNavigate, useParams } from "react-router";
 import { useAppSelector, useAppDispatch } from "../../services/store";
-import { addProduct, removeProduct } from "../../services/slices/viewSlice";
+import {
+    addProduct,
+    removeProduct,
+} from "../../services/slices/view/viewSlice";
 import styles from "./IngredientDetails.module.css";
 
 type Props = {

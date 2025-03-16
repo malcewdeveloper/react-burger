@@ -4,7 +4,7 @@ import { Outlet } from "react-router";
 import { useNavigate, useLocation } from "react-router";
 import { useAppDispatch } from "../../services/store";
 import { logout } from "../../services/thunks/authThunks";
-import { connect, disconnect } from "../../services/slices/authSlice";
+import { connect, disconnect } from "../../services/slices/auth/authSlice";
 import styles from "./ProfileLayout.module.css";
 
 type Props = {

@@ -8,7 +8,6 @@ import {
     ResponseAuthData,
     RequestRegisterData,
     RequestLoginData,
-    ResponseAuthDataWithoutUser,
 } from "../../api/auth/types";
 import { RequestUserUpdate, ResponseUser } from "../../api/user/types";
 

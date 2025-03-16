@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from "../../../../services/store";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { OrderType } from "../../../../types";
 import { useNavigate, useLocation } from "react-router";
-import { addOrder } from "../../../../services/slices/viewSlice";
+import { addOrder } from "../../../../services/slices/view/viewSlice";
 import styles from "../../ListOrders.module.css";
 
 type Props = {

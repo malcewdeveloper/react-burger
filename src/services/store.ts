@@ -1,10 +1,10 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import ingredientReducer from "./slices/ingredientsSlice";
-import cartReducer from "./slices/cartSlice";
-import orderReducer from "./slices/orderSlice";
-import viewReducer from "./slices/viewSlice";
-import authReducer from "./slices/authSlice";
+import ingredientReducer from "./slices/ingredients/ingredientsSlice";
+import cartReducer from "./slices/cart/cartSlice";
+import orderReducer from "./slices/order/orderSlice";
+import viewReducer from "./slices/view/viewSlice";
+import authReducer from "./slices/auth/authSlice";
 import {
     connect,
     disconnect,
@@ -13,7 +13,7 @@ import {
     sendMessage,
     onMessageReceived,
     onError,
-} from "./slices/orderSlice";
+} from "./slices/order/orderSlice";
 import {
     connect as userConnect,
     disconnect as userDisconnect,
@@ -22,7 +22,7 @@ import {
     sendMessage as userSendMessage,
     onMessageReceived as onUserMessageReceived,
     onError as onUserError,
-} from "./slices/authSlice";
+} from "./slices/auth/authSlice";
 import { createWebSocketMiddleware } from "../middlewares/socket-middleware";
 import { OrderMessageType } from "../types";
 
