@@ -48,5 +48,9 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "fetch-mock": "^12.5.2",
+        "redux-mock-store": "^1.5.5"
     }
 }
