@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { OrderInfoItem } from "./components/OrderInfoItem";
 import { ClipLoader } from "react-spinners";
-import { addOrder } from "../../services/slices/viewSlice";
+import { addOrder } from "../../services/slices/view/viewSlice";
 import styles from "./OrderInfo.module.css";
 
 type Props = {};

@@ -7,10 +7,10 @@ import {
     logout,
     getUser,
     updateUser,
-} from "../thunks/authThunks";
-import { OrderMessageType, UserTypeWithoutPassword } from "../../types";
-import { ResponseAuthData } from "../../api/auth/types";
-import { ResponseUser } from "../../api/user/types";
+} from "../../thunks/authThunks";
+import { OrderMessageType, UserTypeWithoutPassword } from "../../../types";
+import { ResponseAuthData } from "../../../api/auth/types";
+import { ResponseUser } from "../../../api/user/types";
 
 type State = {
     data: OrderMessageType | null;
@@ -27,7 +27,7 @@ type State = {
     errorMessage: string;
 };
 
-const initialState: State = {
+export const initialState: State = {
     data: null,
     user: null,
     isLoading: true,

@@ -4,7 +4,7 @@ import {
     DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useAppDispatch } from "../../../services/store";
-import { moveItem } from "../../../services/slices/cartSlice";
+import { moveItem } from "../../../services/slices/cart/cartSlice";
 import { useDrag, useDrop } from "react-dnd";
 import styles from "../BurgerConstructor.module.css";
 

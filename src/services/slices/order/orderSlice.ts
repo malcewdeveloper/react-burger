@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { postOrder } from "../thunks/orderThunks";
-import { OrderMessageType } from "../../types";
+import { postOrder } from "../../thunks/orderThunks";
+import { OrderMessageType } from "../../../types";
 
 type OrderState = {
     data: OrderMessageType | null;
@@ -16,7 +16,7 @@ type OrderState = {
     isError: boolean;
 };
 
-const initialState: OrderState = {
+export const initialState: OrderState = {
     data: null,
     number: null,
     error: null,

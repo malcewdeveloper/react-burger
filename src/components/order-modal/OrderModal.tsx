@@ -3,7 +3,7 @@ import Modal from "../modal/Modal";
 import { ClipLoader } from "react-spinners";
 import { useNavigate, useParams, Link, useLocation } from "react-router";
 import { useAppSelector, useAppDispatch } from "../../services/store";
-import { addOrder, removeOrder } from "../../services/slices/viewSlice";
+import { addOrder, removeOrder } from "../../services/slices/view/viewSlice";
 import { OrderInfo } from "../../pages";
 
 type Props = {

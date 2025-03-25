@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ItemType, OrderType } from "../../types";
+import { ItemType, OrderType } from "../../../types";
 
 type ViewState = {
     selectProduct: ItemType | null;
     selectOrder: OrderType | null;
 };
 
-const initialState: ViewState = {
+export const initialState: ViewState = {
     selectProduct: null,
     selectOrder: null,
 };

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ApiResponseDataType, ItemType } from "../../types";
-import { getIngredients } from "../thunks/ingredientsThunks";
+import { ApiResponseDataType, ItemType } from "../../../types";
+import { getIngredients } from "../../thunks/ingredientsThunks";
 
 type IngredientState = {
     data: ItemType[];
@@ -8,7 +8,7 @@ type IngredientState = {
     isError: boolean;
 };
 
-const initialState: IngredientState = {
+export const initialState: IngredientState = {
     data: [],
     isLoading: true,
     isError: false,

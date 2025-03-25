@@ -2,7 +2,7 @@ import React from "react";
 import IngredientList from "../../components/ingredient-details/components/IngredientList";
 import { ClipLoader } from "react-spinners";
 import { Link, Navigate, useParams } from "react-router";
-import { addProduct } from "../../services/slices/viewSlice";
+import { addProduct } from "../../services/slices/view/viewSlice";
 import { getIngredients } from "../../services/thunks/ingredientsThunks";
 import { useAppDispatch, useAppSelector } from "../../services/store";
 import styles from "./Ingredient.module.css";
@@ -50,7 +50,12 @@ export default function Ingredient() {
             <div className="text text_type_main-medium mb-4">
                 Ингридиент не найден
             </div>
-            <Link to="/" className="text text_type_main-default text_color_inactive">В конструктор</Link>
+            <Link
+                to="/"
+                className="text text_type_main-default text_color_inactive"
+            >
+                В конструктор
+            </Link>
         </div>
     );
 }

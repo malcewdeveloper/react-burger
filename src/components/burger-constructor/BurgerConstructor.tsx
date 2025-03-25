@@ -12,13 +12,13 @@ import {
     addItem,
     removeItem,
     clearCart,
-} from "../../services/slices/cartSlice";
+} from "../../services/slices/cart/cartSlice";
 import {
     incrementCount,
     decrementCount,
     incrementBun,
     decrementAll,
-} from "../../services/slices/ingredientsSlice";
+} from "../../services/slices/ingredients/ingredientsSlice";
 import { postOrder } from "../../services/thunks/orderThunks";
 import { useDrop } from "react-dnd";
 import { ItemType, ItemTypeWithId } from "../../types";
