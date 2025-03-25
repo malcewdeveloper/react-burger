@@ -1,6 +1,7 @@
 import { API_URL } from "../../src/constants";
 
 describe("Constructor pages tests", () => {
+    const testUrl = "localhost:3000";
     const itemClass = "[class^='BurgerIngredients_item'";
     const modalClass = "[class^='Modal_overlay']";
     const modalButtonClass = "[class^='Modal_button']";
@@ -14,7 +15,7 @@ describe("Constructor pages tests", () => {
     };
 
     beforeEach(() => {
-        cy.visit("localhost:3000");
+        cy.visit(testUrl);
         cy.intercept("POST", `${API_URL}/orders`, {
             statusCode: 200,
             body: mockOrder,
